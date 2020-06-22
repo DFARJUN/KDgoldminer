@@ -1,0 +1,110 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<RootTree>
+  <idCounter>214</idCounter>
+  <game GameCode="101" timePerQuest="30" isPublish="True" protected="true">
+    <GameSubject>תנ"ך</GameSubject>
+    <questions Quantity="5">
+      <question id="1">
+        <questionText>מי היו ילדיו של נוח?</questionText>
+        <img>
+        </img>
+        <answers>
+          <answer feedback="True" AnsType="text">1נח</answer>
+          <answer feedback="True" AnsType="text">2נח</answer>
+          <answer feedback="True" AnsType="text">3נח</answer>
+          <answer feedback="False" AnsType="text">4נח</answer>
+          <answer feedback="False" AnsType="text">5נח</answer>
+          <answer feedback="False" AnsType="text">6נח</answer>
+          <answer feedback="False" AnsType="text">7נח</answer>
+        </answers>
+      </question>
+      <question id="2">
+        <questionText>אילו חיות מוזכרות בתנך?</questionText>
+        <img>
+        </img>
+        <answers>
+          <answer feedback="True" AnsType="text">לויתן</answer>
+          <answer feedback="True" AnsType="text">יונה</answer>
+          <answer feedback="False" AnsType="text">יפת</answer>
+        </answers>
+      </question>
+      <question id="3">
+        <questionText>מהן ההתרחשויות בתקופת כהונתו של שלמה המלך?</questionText>
+        <img>
+        </img>
+        <answers>
+          <answer feedback="False" AnsType="text">בניית בית שלישי</answer>
+          <answer feedback="True" AnsType="text">נישואים לאלף נשים</answer>
+          <answer feedback="False" AnsType="text">מלחמות עם האצטקים</answer>
+          <answer feedback="False" AnsType="text">יונתן</answer>
+        </answers>
+      </question>
+      <question id="4">
+        <questionText>מי הם הנביאים בתורה?</questionText>
+        <img />
+        <answers>
+          <answer feedback="False" AnsType="text">שלמה</answer>
+          <answer feedback="False" AnsType="text">אחאב</answer>
+          <answer feedback="False" AnsType="text">איזבל</answer>
+          <answer feedback="False" AnsType="text">אליהו</answer>
+          <answer feedback="True" AnsType="text">דבורה</answer>
+        </answers>
+      </question>
+      <question id="5">
+        <questionText>sfdhfd</questionText>
+        <img>uploadedFiles/thisuplod15_06_20-19_21_141.jpg</img>
+        <answers>
+          <answer feedback="False" AnsType="text">sfdh</answer>
+          <answer feedback="False" AnsType="text">dsfh</answer>
+          <answer feedback="False" AnsType="text">יונתן</answer>
+          <answer feedback="False" AnsType="picture">uploadedFiles/thisuplod15_06_20-19_22_528.jpg</answer>
+          <answer feedback="False" AnsType="text">6נח</answer>
+          <answer feedback="False" AnsType="text">6נח</answer>
+          <answer feedback="False" AnsType="text">נח</answer>
+        </answers>
+      </question>
+    </questions>
+  </game>
+  <game GameCode="102" timePerQuest="ללא הגבלה" isPublish="False" protected="true">
+    <GameSubject>יונקים</GameSubject>
+    <questions Quantity="4">
+      <question id="1">
+        <questionText>מי הם היונקים?</questionText>
+        <img />
+        <answers>
+          <answer feedback="True" AnsType="text">קוף</answer>
+          <answer feedback="True" AnsType="text">קנגרו</answer>
+          <answer feedback="False" AnsType="text">יונה</answer>
+        </answers>
+      </question>
+      <question id="2">
+        <questionText>מהם המאפיינים של היונקים?</questionText>
+        <img />
+        <answers>
+          <answer feedback="False" AnsType="text">אוזניים קטנות</answer>
+          <answer feedback="False" AnsType="text">אוכלים רק מן הצומח</answer>
+          <answer feedback="True" AnsType="text">תלויים בחלב אימם</answer>
+          <answer feedback="False" AnsType="text">ישנים שנת חורף</answer>
+        </answers>
+      </question>
+      <question id="3">
+        <questionText>מאילו מאכלים ניזונים החיות בתמונה</questionText>
+        <img>
+        </img>
+        <answers>
+          <answer feedback="True" AnsType="text">ענפים</answer>
+          <answer feedback="True" AnsType="text">עלים</answer>
+        </answers>
+      </question>
+      <question id="4">
+        <questionText>מי הם יונקי השלייה?</questionText>
+        <img />
+        <answers>
+          <answer feedback="False" AnsType="text">קנגרו</answer>
+          <answer feedback="False" AnsType="text">צפרדע</answer>
+          <answer feedback="True" AnsType="text">מכרסמים</answer>
+        </answers>
+      </question>
+    </questions>
+  </game>
+</RootTree>
