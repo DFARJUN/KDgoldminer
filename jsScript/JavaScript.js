@@ -1,4 +1,83 @@
-﻿//////אקורדיון////////////////////
+﻿//////////////טולטיפ////////
+
+//$(document).ready(function () {
+//    $('[data-toggle="tooltip"]').tooltip();
+//});
+
+//////////דיב שעוטף את הגריווי//////////
+$(document).ready(function () {
+    if (window.location.pathname == '/Default.aspx') {
+        $("#GridView1").parent().addClass("divgrid")
+        //var grid = document.getElementsByClassName("divgrid").item(0);
+        //var divmove = document.getElementById("serchtomove");
+        //var Gridview = document.getElementById("GridView1");
+        //grid.appendChild(divmove);
+        //grid.insertBefore(divmove, Gridview)
+    }
+});
+
+
+
+/////////////////חיפוש גרידווי///////////////
+$(document).ready(function () {
+    $("#addNameTB").keyup(function () {
+        var result = 0;
+        var tbody = document.getElementById("GridView1").getElementsByTagName("tbody").item(0).getElementsByTagName("tr");
+        for (var i = 1; i < tbody.length; i++) {
+            if ((tbody.item(i).getElementsByClassName("qbutton").item(0).value.includes(document.getElementById("addNameTB").value)) ||
+                (tbody.item(i).getElementsByTagName("td").item(1).innerHTML.includes(document.getElementById("addNameTB").value))) {
+                tbody.item(i).style.display = "table-row"
+                result++;
+                document.getElementById("noresult").style.display = "none";
+
+            } else {
+                tbody.item(i).style.display = "none"
+
+            }
+        }
+        if (result == 0) {
+            document.getElementById("noresult").style.display = "block";
+            var grid = document.getElementsByClassName("divgrid").item(0);
+            var divmove = document.getElementById("noresult");
+            grid.appendChild(divmove);
+        }
+    });
+
+    if (document.getElementById("GridView1") == null) {
+        document.getElementById("serchtomove").style.display = "none";
+    } else {
+        document.getElementById("nogame").style.display = "none";
+    }
+
+});
+
+
+
+//$(document).ready(function () {
+//    $(window).unload(function () {
+//        $("#Button2").click();
+//    });
+//});
+
+//////////זום למסך/////////
+$(window).resize(function () {
+    resizewin();
+});
+
+$(document).ready(function () {
+    resizewin();
+});
+
+function resizewin() {
+    var win = $(window).width();
+    var winzoom = win / 1200;
+    $("body").css("zoom", winzoom);
+}
+
+
+
+
+//////אקורדיון////////////////////
 
 
 $(document).ready(function () {
@@ -48,6 +127,118 @@ function Shrink() {
 
 
 
+///////////צקבוקס פרסום - לא פעיל//////////
+
+
+$(document).ready(function () {
+    if (window.location.pathname == '/Default.aspx') {
+        var gamenum = document.getElementById("dashgamenumber").innerText;
+        for (i = 0; i < gamenum; i++) {
+            if (document.getElementById("GridView1_GameQnumLbl_" + i).innerHTML < 6) {
+                document.getElementById("GridView1_ISpassCheckBox1_" + i).disabled = true;
+                document.getElementById("GridView1_ISpassCheckBox1_" + i).parentElement.parentElement.setAttribute("title", "");
+                document.getElementById("GridView1_ISpassCheckBox1_" + i).parentElement.parentElement.setAttribute("data-original-title", "לא ניתן לפרסם משחק יש להוסיף שאלות למשחק");
+                document.getElementById("GridView1_ISpassCheckBox1_" + i).parentElement.parentElement.setAttribute("data-toggle", "tooltip");
+            }
+            else {
+                document.getElementById("GridView1_ISpassCheckBox1_" + i).disabled = false;
+                document.getElementById("GridView1_ISpassCheckBox1_" + i).parentElement.parentElement.removeAttribute("title");
+                document.getElementById("GridView1_ISpassCheckBox1_" + i).parentElement.parentElement.removeAttribute("data-original-title");
+                document.getElementById("GridView1_ISpassCheckBox1_" + i).parentElement.parentElement.removeAttribute("data-toggle");
+            }
+
+        }
+    }
+}); 
+
+
+
+////////////ספירת תווים////////////
+function charcountupdate(str) {
+    for (var i = 0; i < 9; i++) {
+        var editqseccount = document.getElementsByClassName("charcount")[i].innerHTML = "";
+    }
+    var lng = str.length;
+    var thisid = event.target.id
+    var thismax = document.getElementById(thisid).getAttribute("MaxLength");
+    if (thismax != null) {
+        document.getElementById(thisid).nextElementSibling.innerHTML = lng + "/" + thismax;
+        if (thisid == "GameSubjectTB" && lng >= 2) {
+            document.getElementsByClassName("charcount")[0].style.color = "black";
+            document.getElementsByClassName("charcount")[0].style.fontWeight = "normal";
+        }
+        if (thisid == "GameSubjectTB" && lng < 2) {
+            document.getElementsByClassName("charcount")[0].style.color = "red";
+            document.getElementsByClassName("charcount")[0].style.fontWeight = "bold";
+        }
+    } else {
+        thismax = document.getElementById(thisid).getAttribute("Maxchar");
+        document.getElementById(thisid).nextElementSibling.innerHTML = lng + "/" + thismax;
+        document.getElementById(thisid).value = str.slice(0, thismax)
+        if (lng >= 3) {
+            document.getElementsByClassName("charcount")[1].style.color = "black";
+            document.getElementsByClassName("charcount")[1].style.fontWeight = "normal";
+        }
+        if (lng < 3) {
+            document.getElementsByClassName("charcount")[1].style.color = "red";
+            document.getElementsByClassName("charcount")[1].style.fontWeight = "bold";
+        }
+    }
+}
+
+function charcountupdatenew(str) {
+    var lng = str.length;
+    var thisid = event.target.id
+    var thismax = document.getElementById(thisid).getAttribute("MaxLength");
+    if (thismax != null) {
+        document.getElementById(thisid).nextElementSibling.innerHTML = lng + "/" + thismax;
+        if (thisid == "GameSubjectTB" && lng >= 2) {
+            document.getElementsByClassName("charcount")[0].style.color = "black";
+            document.getElementsByClassName("charcount")[0].style.fontWeight = "normal";
+            document.getElementById("newgameIMG").disabled = false;
+            document.getElementById("newgameIMG").className = "deletebtn";
+
+            
+        }
+        if (thisid == "GameSubjectTB" && lng < 2) {
+            document.getElementsByClassName("charcount")[0].style.color = "red";
+            document.getElementsByClassName("charcount")[0].style.fontWeight = "bold";
+            document.getElementById("newgameIMG").disabled = true;
+        }
+    }
+}
+
+
+$(document).ready(function () {
+    if ($("#GameSubjectTB").val().length < 2) {
+        $(".charcount:first").css("color", "red")
+        $(".charcount:first").css("font-weight", "bold")
+        $(".charcount:first").text($("#GameSubjectTB").val().length + "/" + "40");
+    }
+});
+
+
+
+
+
+
+
+//////////////דף כניסה עם סיסמא/////////
+function adminfunc(str) {
+
+    if (document.getElementById("usernameTB").value != "" && document.getElementById("passwordTB").value != "") {
+        document.getElementById("Button1").disabled = false;
+        document.getElementById("Button1").setAttribute('title', "");
+        document.getElementById("Button1").style.cursor = "pointer"
+    } else {
+        document.getElementById("Button1").disabled = true;
+        document.getElementById("Button1").setAttribute('title', "הזן את פרטי ההתחברות");
+        document.getElementById("Button1").style.cursor = "help"
+    }
+};
+
+
+
 ////////////בדיקה כפולה של מחיקה//////////////
 
 // Get the modal
@@ -62,6 +253,12 @@ window.onclick = function (event) {
 
 function showmodel(event) {
     event.parentElement.children[1].style.display = 'block';
+    if (window.location.pathname == '/Edit.aspx') {
+        event.parentElement.getElementsByClassName("gamename").item(0).innerHTML = "''" + event.parentElement.parentElement.getElementsByTagName("input").item(0).value + "''";
+    }
+}
+function showmodel2(event) {
+    document.getElementById("id02").style.display = 'block';
 }
 
 function hidemodel(event) {
@@ -226,14 +423,69 @@ $(document).ready(function () {
 
 });
 
-//function deletephoto7() {
-//    $('#IButton7').css("display", "none");
-//    $('#FileUpload7').val('');
-//    $('#ImageforUpload7').attr('src', '/Images/ImagePlaceholder.png');
-//    document.getElementById("ATextBox6").disabled = false
-//    var hdnfldVariable = document.getElementById('hdnfldVariable7');
-//    hdnfldVariable.value = false;
-//}
+
+
+/////////////תנאי שמירת תאורה//////////
+$(document).ready(function () {
+    setTimeout(function () { refsave(); }, 100);
+         
+
+    
+    for (var i = 1; i < 8; i++) {
+        $("#FileUpload" + i).change(function () {
+            refsave();
+        });
+        $("#ACheckBox" + i).change(function () {
+            refsave();
+        });
+        $("#ATextBox" + i).focusout(function () {
+            refsave();
+        });
+        $("#mainqtb").focusout(function () {
+            refsave();
+        });
+    }
+    function refsave() {
+        var numofopt = 0;
+        var numofocheck = 0;
+        for (var i = 1; i < 8; i++) {
+            if (document.getElementById("ImageforUpload" + i).src.includes("ImagePlaceholder.png") != true) {
+                numofopt++
+            };
+            if (document.getElementById("ATextBox" + i).value !="") {
+                numofopt++
+            };
+            if (document.getElementById("ACheckBox" + i).checked == true) {
+                numofocheck++
+            };
+        }
+        if (numofopt > 2 && (document.getElementById("mainqtb").value[2] != undefined) && (numofocheck > 0) && (numofocheck < 6)) {
+            document.getElementById("addtoq").disabled = false;
+            document.getElementById("addtoq").removeAttribute("title");
+            document.getElementById("threeans").firstChild.setAttribute("d","M173.898 439.404l-166.4-166.4c-9.997-9.997-9.997-26.206 0-36.204l36.203-36.204c9.997-9.998 26.207-9.998 36.204 0L192 312.69 432.095 72.596c9.997-9.997 26.207-9.997 36.204 0l36.203 36.204c9.997 9.997 9.997 26.206 0 36.204l-294.4 294.401c-9.998 9.997-26.207 9.997-36.204-.001z")
+            document.getElementById("onecorrect").firstChild.setAttribute("d","M173.898 439.404l-166.4-166.4c-9.997-9.997-9.997-26.206 0-36.204l36.203-36.204c9.997-9.998 26.207-9.998 36.204 0L192 312.69 432.095 72.596c9.997-9.997 26.207-9.997 36.204 0l36.203 36.204c9.997 9.997 9.997 26.206 0 36.204l-294.4 294.401c-9.998 9.997-26.207 9.997-36.204-.001z")
+
+
+        } else {
+            document.getElementById("addtoq").disabled = true;
+            document.getElementById("addtoq").setAttribute("title", "השאלה לא עומדת בתנאי שמירה");
+            if (numofopt > 2 && (document.getElementById("mainqtb").value[2] != undefined)) {
+                document.getElementById("onecorrect").firstChild.setAttribute("d", "M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z")
+
+            }
+            if ((numofocheck > 0) && (numofocheck < 6)) {
+                document.getElementById("threeans").firstChild.setAttribute("d", "M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z")
+            }
+
+        }
+    }
+
+});
+
+
+
+
+
 
 
 
@@ -346,3 +598,63 @@ $(document).ready(function () {
         }
     });
 });
+
+function checkifhaveq() {
+    var numofopt = 0;
+    for (var i = 1; i < 8; i++) {
+        if (document.getElementById("ImageforUpload" + i).src.includes("ImagePlaceholder.png") != true) {
+            numofopt++
+        };
+        if (document.getElementById("ATextBox" + i).value != "") {
+            numofopt++
+        };
+    }
+
+    if (numofopt > 0 || (document.getElementById("mainqtb").value[1] != undefined)) {
+        document.getElementById("id02").style.display = "block";
+    } 
+
+}
+
+function movetomain() {
+    console.log("dsg")
+    window.location = '/Default.aspx';
+}
+
+function thegamewaspublish() {
+    console.log("dsagds")
+    document.getElementById("id03").style.display = "none";
+    document.getElementById("id06").style.display = "block";
+}
+
+///////////////סיום עריכה ופרסום///////
+function endeditandpublish() {
+    document.getElementById("id03").style.display = "none";
+    document.getElementById("id04").style.display = "block";
+}
+
+function publishgame() {
+    document.getElementById("id04").style.display = "none";
+    document.getElementById("id05").style.display = "block";
+}
+
+function endedit() {
+    var numofopt = 0;
+    for (var i = 1; i < 8; i++) {
+        if (document.getElementById("ImageforUpload" + i).src.includes("ImagePlaceholder.png") != true) {
+            numofopt++
+        };
+        if (document.getElementById("ATextBox" + i).value != "") {
+            numofopt++
+        };
+    }
+
+    if (numofopt > 0 || (document.getElementById("mainqtb").value[1] != undefined)) {
+        document.getElementById("id03").style.display = "block";
+    } else {
+        document.getElementById("id03").style.display = "block";
+        document.getElementById("Button3").click();
+    }
+}
+
+

@@ -3,10 +3,10 @@
 /* Shape */
 /*****************************/
 
-.tabs-style-shape {
+/*.tabs-style-shape {
 	max-width: 1200px;
 
-}
+}*/
 
 .tabs-style-shape nav ul li {
 	margin:-1px 3em;
@@ -86,13 +86,24 @@ li {
 	z-index: 5 !important;
 }
 
+	.thistab > span {
+		border-bottom: 2px solid #193b68;
+		width: 75%;
+		height: 0px !important;
+		display: inline-block;
+		position: relative;
+		float: right;
+		top: 17px;
+		right: 22px;
+	}
+
 .thistab a {
 	cursor:context-menu;
 }
 
-.notthistab a span {
-	background-color: #428dfc;
-	color: white;
+.notthistab a {
+	text-decoration: none;
+	color:#193b68;
 }
 .notthistab svg {
 	fill: #428dfc;
@@ -100,7 +111,6 @@ li {
 
 .thistab a span {
 	background-color: white;
-	color: black;
 }
 .thistab svg {
 	fill: white;

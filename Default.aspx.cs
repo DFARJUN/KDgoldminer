@@ -11,51 +11,28 @@ public partial class _Default : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-
+        removeempty();
+        loadavatar();
     }
 
-    protected void GridView1_SelectedIndexChanged(object sender, EventArgs e)
+    protected void Page_init(object sender, EventArgs e)
+    {
+        XmlDocument myDoc = new XmlDocument();
+        myDoc.Load(Server.MapPath("/tree/game.xml"));
+        TextBox1.Text = Server.UrlDecode(myDoc.SelectSingleNode("//teachernote").InnerText);
+        TextBox1.DataBind();
+    }
+
+
+        protected void GridView1_SelectedIndexChanged(object sender, EventArgs e)
     {
 
     }
 
     protected void ImageButton1_Click(object sender, ImageClickEventArgs e)
     {
-        XmlDocument xmlDoc = XmlDataSource1.GetXmlDocument(); //טעינת הקובץ אקסמל בצורה חדשה כדי לראות את הסורס. 
-
-        //--הקפצה של ה- ID--//
-        int myId = Convert.ToInt16(xmlDoc.SelectSingleNode("//idCounter").InnerXml);
-        myId++;
-        string myNewId = myId.ToString(); //אם אני רוצה ליצור קוד של 106, נוסיף את 10 ידנית ואז את שם המשתנה
-        xmlDoc.SelectSingleNode("//idCounter").InnerText = myNewId;
-
-        // יצירת ענף משחק     
-        XmlElement myNewStudentNode = xmlDoc.CreateElement("game");
-        myNewStudentNode.SetAttribute("GameCode", myNewId);
-        myNewStudentNode.SetAttribute("timePerQuest", "30");
-        myNewStudentNode.SetAttribute("isPublish", "false");
-        myNewStudentNode.SetAttribute("protected", "false");
-
-        // יצירת ענף שם הסטודנט
-        // במשחק שלנו לא להוסיף תוכן אלא רקליצור את התשתית עצמה
-        XmlElement myNewNameNode = xmlDoc.CreateElement("GameSubject");
-        //הוספת טקסט עם יכולת קידוד
-        myNewNameNode.InnerXml = Server.UrlEncode(addNameTB.Text);        //לא להוסיף את זה בהתחלה
-        myNewStudentNode.AppendChild(myNewNameNode);
-
-        // יצירת ענף ציונים ללא הציונים עצמם
-        XmlElement myGradesNode = xmlDoc.CreateElement("questions");
-        myGradesNode.SetAttribute("Quantity", "0");
-        myNewStudentNode.AppendChild(myGradesNode);
-
-        // הוספת ענף התלמיד לעץ כתלמיד הראשון
-        XmlNode FirstStudent = xmlDoc.SelectNodes("/RootTree/game").Item(0);
-        xmlDoc.SelectSingleNode("/RootTree").InsertBefore(myNewStudentNode, FirstStudent);
-        XmlDataSource1.Save();
-        GridView1.DataBind();
-
-        // ניקוי תיבת הטקסט
-        addNameTB.Text = "";
+        string nameserch = addNameTB.Text;
+        XmlDataSource1.XPath = "/RootTree/game[GameSubject[contains(text(),'"+nameserch+"')]]";
     }
 
     protected void GridView1_RowCommand(object sender, GridViewCommandEventArgs e)
@@ -98,18 +75,18 @@ public partial class _Default : System.Web.UI.Page
         //הסרת ענף של משחק קיים באמצעות זיהוי האיי דיי שניתן לו על ידי לחיצה עליו מתוך הטבלה
         //שמירה ועדכון לתוך העץ ולגריד ויו
         //במחיקה לא נוגעים באיי די קאונטר כדי שלא ייוצר כפילות 
-        string gameIdToDelete = Session["gameIDSession"].ToString();
+        string GameID = Session["gameIDSession"].ToString();
 
         //לקיחת הקובץ 
         XmlDocument Document = XmlDataSource1.GetXmlDocument();
 
-        //בדיקה אם הענף מוגן
-            XmlNode node = Document.SelectSingleNode("/RootTree/game[@GameCode='" + gameIdToDelete + "']");
+            XmlNode node = Document.SelectSingleNode("/RootTree/game[@GameCode='" + GameID + "']");
             //פקודת המחיקה
             node.ParentNode.RemoveChild(node);
             //שמירה
             XmlDataSource1.Save();
             GridView1.DataBind();
+              removeempty();
 
     }
 
@@ -140,5 +117,60 @@ public partial class _Default : System.Web.UI.Page
         XmlDataSource1.Save();
         GridView1.DataBind();
 
+        if (theStudents.Attributes["isPublish"].InnerText == "True")
+        {
+        Page.ClientScript.RegisterStartupScript(this.GetType(), "X", "showmodel2()", true);
+        Label3.Text = Server.UrlDecode(xmlDoc.SelectSingleNode("/RootTree/game[@GameCode='" + theId + "']/GameSubject").InnerText.ToString());
+        Label4.Text = theId;
+        }
+       
+
+    }
+
+    public void removeempty()
+    {
+        XmlDocument myDoc = new XmlDocument();
+        myDoc.Load(Server.MapPath("/tree/game.xml"));
+
+        Numofplayer.Text= myDoc.SelectSingleNode("//childcounter").InnerText;
+        int numofgame = myDoc.SelectNodes("/RootTree/game").Count;
+        dashgamenumber.Text= numofgame.ToString();
+
+        Numofplayer.DataBind();
+        dashgamenumber.DataBind();
+
+
+    }
+    
+    public void loadavatar()
+    {
+        XmlDocument myDoc = new XmlDocument();
+        myDoc.Load(Server.MapPath("/tree/avatar.xml"));
+        string admin = "";
+        if(Session["theadmin"] !=null)
+        {
+            admin = Session["theadmin"].ToString().ToLower();
+        }
+        if (myDoc.SelectSingleNode("//admin[@code='" + admin + "']/name") == null)
+        {
+
+        }
+        else
+        {
+        adminamelb.Text = myDoc.SelectSingleNode("//admin[@code='"+ admin +"']/name").InnerText.ToString();
+        ziporaavatar.Attributes["src"] = "/style/avatarimg/" + admin + ".png";
+        }
+
+
+    }
+
+
+    protected void ImageButton1_Click1(object sender, ImageClickEventArgs e)
+    {
+        XmlDocument myDoc = new XmlDocument();
+        myDoc.Load(Server.MapPath("/tree/game.xml"));
+        myDoc.SelectSingleNode("//teachernote").InnerText = Server.UrlEncode(TextBox1.Text);
+        myDoc.Save(Server.MapPath("/tree/game.xml"));
+        TextBox1.DataBind();
     }
 }

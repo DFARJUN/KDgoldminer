@@ -11,7 +11,7 @@ using System.Web.UI.HtmlControls;
 
 public partial class Edit : System.Web.UI.Page
 {
-    string imagesLibPath = "uploadedFiles/";
+    string imagesLibPath = "KnowMiner/uploadedFiles/";
 
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -22,7 +22,7 @@ public partial class Edit : System.Web.UI.Page
     {
         string GameID = Session["gameIDSession"].ToString();
         XmlDocument myDoc = new XmlDocument();
-        myDoc.Load(Server.MapPath("tree/game.xml"));
+        myDoc.Load(Server.MapPath("/tree/game.xml"));
 
         //יצירת שאילתה שתקבל לי את הסטודנט המסוים לפי האיי די
         //לזכור שצריך לפענח את התווים את המיוחדים כדי שנוכל לקרוא אותם.
@@ -37,7 +37,7 @@ public partial class Edit : System.Web.UI.Page
     {
         string GameID = Session["gameIDSession"].ToString();
         XmlDocument myDoc = new XmlDocument();
-        myDoc.Load(Server.MapPath("tree/game.xml"));
+        myDoc.Load(Server.MapPath("/tree/game.xml"));
         int qunum = myDoc.SelectNodes("//game[@GameCode=" + GameID + "]//question").Count;
 
 
@@ -46,7 +46,7 @@ public partial class Edit : System.Web.UI.Page
             string d = i.ToString();
             HtmlInputButton mylbl1 = new HtmlInputButton();
             mylbl1.Attributes["class"] = "accordion";
-            mylbl1.Value = myDoc.SelectSingleNode("/RootTree/game[@GameCode=" + GameID + "]//question[@id="+ d +"]/questionText").InnerText;
+            mylbl1.Value = Server.UrlDecode(myDoc.SelectSingleNode("/RootTree/game[@GameCode=" + GameID + "]//question[@id="+ d +"]/questionText").InnerText);
             Panel1.Controls.Add(mylbl1);
 
             int ansnum = myDoc.SelectNodes("/RootTree/game[@GameCode=" + GameID + "]//question[@id=" + d + "]//answer").Count;
@@ -91,7 +91,7 @@ public partial class Edit : System.Web.UI.Page
                 }
                 else
                 {
-                    tc.Text = myDoc.SelectSingleNode("/RootTree/game[@GameCode=" + GameID + "]//question[@id=" + d + "]//answer[" + l + "]").InnerText;
+                    tc.Text = Server.UrlDecode(myDoc.SelectSingleNode("/RootTree/game[@GameCode=" + GameID + "]//question[@id=" + d + "]//answer[" + l + "]").InnerText);
                 }
                 tr.Controls.Add(tc);
                 thetable.Controls.Add(tr);
